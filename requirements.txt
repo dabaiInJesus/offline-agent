@@ -22,7 +22,7 @@ thrift-sasl>=0.4.3
 
 # ============ 向量数据库 ============
 faiss-cpu>=1.8.0
-faiss-gpu>=1.8.0  # 可选，如需 GPU 加速
+faiss-gpu>=1.7.0  # 可选，如需 GPU 加速（注意：faiss-gpu 最新版本为 1.7.2）
 chromadb>=0.5.0
 langchain-chroma>=0.1.0
 

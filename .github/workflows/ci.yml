@@ -135,11 +135,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  # ============ 构建并推送 Docker 镜像 ============
+  # ============ 推送 Docker 镜像 (可选) ============
+  # 注意: 推送需要 GitHub Packages 写权限。如果失败但 Docker 构建成功，可以忽略。
+  # 用户可以在本地使用 docker build 构建镜像，无需推送到 GitHub Packages。
   docker-push:
     name: Push Docker Image
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    if: false  # 禁用自动推送，用户可手动构建
     needs: [docker-build-cpu]
     
     steps:

@@ -98,6 +98,16 @@ class MCPConfig:
     server_url: str = field(default_factory=lambda: os.getenv("MCP_SERVER_URL", "http://localhost:3000"))
 
 
+@dataclass
+class DeepSeekConfig:
+    """DeepSeek 云端模型配置"""
+    api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", ""))
+    base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"))
+    model: str = field(default_factory=lambda: os.getenv("DEEPSEEK_MODEL", "deepseek-chat"))
+    temperature: float = 0.7
+    timeout: int = 120
+
+
 # 全局配置实例
 ollama_config = OllamaConfig()
 oracle_config = OracleConfig()
@@ -107,3 +117,4 @@ hive_config = HiveConfig()
 vector_db_config = VectorDBConfig()
 kb_config = KnowledgeBaseConfig()
 mcp_config = MCPConfig()
+deepseek_config = DeepSeekConfig()

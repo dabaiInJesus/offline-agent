@@ -1,10 +1,11 @@
 # Offline Agent - 本地 AI 智能体平台
 
-> 🤖 基于 LangChain + LangGraph + Ollama 的本地大模型智能体平台，支持多数据库、知识库 RAG、MCP 协议
+> 🤖 基于 LangChain + LangGraph 的本地/云端 AI 智能体平台，支持 Ollama 和 DeepSeek 双模型切换，多数据库、知识库 RAG、MCP 协议
 
 ## 功能特性
 
 - 🔮 **本地大模型** - 通过 Ollama 连接 qwen2.5/llama 等开源模型，完全离线运行
+- ☁️ **云端模型** - 支持 DeepSeek API，在线学习更方便
 - 🧠 **多种 Agent** - 支持 ReAct、Tool、PlanExecute、Graph 等多种 Agent 架构
 - 📚 **知识库 RAG** - 支持 PDF/Word/Excel 等文档的向量检索增强生成
 - 💾 **多数据库** - 支持 Oracle、MySQL、PostgreSQL、Hive 等数据库的 SQL 执行
@@ -45,10 +46,16 @@ pip install -r requirements.txt
 # 2. 安装 Node.js
 # https://nodejs.org/
 
-# 3. 配置 Ollama（如果使用本地模型）
+# 3. 配置模型（二选一）
+
+# 方式 A: 使用 Ollama 本地模型（离线）
 # 安装 Ollama: https://ollama.ai/
 ollama pull qwen2.5:32b
 ollama serve
+
+# 方式 B: 使用 DeepSeek 云端模型（联网）
+# 申请 API: https://platform.deepseek.com/
+# 设置环境变量: export DEEPSEEK_API_KEY=your-key
 
 # 4. 启动服务
 python run.py
@@ -65,9 +72,16 @@ cp .env.example .env
 主要配置项：
 
 ```env
-# Ollama 配置
+# 模型切换（ollama 或 deepseek）
+ACTIVE_PROVIDER=ollama  # 或 deepseek
+
+# Ollama 配置（离线）
 OLLAMA_BASE_URL=http://localhost:11434
 OLLAMA_MODEL=qwen2.5:32b
+
+# DeepSeek 配置（联网）
+DEEPSEEK_API_KEY=your-api-key
+DEEPSEEK_MODEL=deepseek-chat  # 或 deepseek-coder
 
 # 向量数据库路径
 VECTOR_DB_PATH=./vector_db
@@ -148,6 +162,8 @@ offline-agent/
 | 模型 | 参数量 | 内存需求 | 适用场景 |
 |------|--------|----------|----------|
 | qwen2.5:32b | 32B | ~20GB | 通用对话、代码 |
+| deepseek-chat | V3 | - | 最新一代，性能超越 GPT-4o |
+| deepseek-coder | V3 | - | 代码专用
 | qwen2.5-coder:32b | 32B | ~20GB | 代码生成 |
 | llama3.1:70b | 70B | ~40GB | 复杂推理 |
 | phi3:14b | 14B | ~8GB | 轻量对话 |

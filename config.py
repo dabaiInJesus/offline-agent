@@ -14,9 +14,9 @@ load_dotenv()
 class OllamaConfig:
     """Ollama 配置"""
     base_url: str = field(default_factory=lambda: os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"))
-    model: str = field(default_factory=lambda: os.getenv("OLLAMA_MODEL", "qwen2.5:14b"))
+    model: str = field(default_factory=lambda: os.getenv("OLLAMA_MODEL", "qwen2.5:32b"))
     temperature: float = 0.7
-    timeout: int = 120
+    timeout: int = 300
 
 
 @dataclass

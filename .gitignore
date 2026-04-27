@@ -3,42 +3,72 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
-*.egg-info/
-*.egg
-dist/
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # Environment
 .env
-.venv
-env/
-venv/
+.env.local
+.env.*.local
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+# Logs
+logs/
+*.log
+.log/
 
-# Git
-.git
+# Data
+data/
+vector_db/
+knowledge_base/
+knowledge_bases/
+*.db
+*.sqlite
 
-# Node
-node_modules/
-webapp/frontend/node_modules/
+# Models (Ollama models should be in ~/.ollama)
+.ollama/
 
-# Build output
-webapp/frontend/dist/
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+test-results/
+*.cover
+
+# Docker
+.dockerignore
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-
-# Data
-*.db
-*.sqlite3
-chroma_data/
-faiss_index/
+# Temp
+tmp/
+temp/
+*.tmp

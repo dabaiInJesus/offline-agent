@@ -1,0 +1,88 @@
+# Offline Agent Docker Compose 配置
+# 使用方法: docker-compose up -d
+
+services:
+  # ============ Ollama 服务（可选，如已本地运行可注释掉）============
+  ollama:
+    image: ollama/ollama:latest
+    container_name: offline-agent-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    # GPU 支持（如需要）
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+    networks:
+      - offline-agent-net
+
+  # ============ Offline Agent 主服务 ============
+  offline-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: cpu
+    container_name: offline-agent
+    restart: unless-stopped
+    ports:
+      - "8000:8000"   # FastAPI 后端
+      - "8080:8080"   # Vue 前端
+      - "8001:8001"   # MCP 服务
+    volumes:
+      # 挂载本地目录以便修改代码
+      - ./config.py:/app/config.py:ro
+      - ./main.py:/app/main.py:ro
+      - ./run.py:/app/run.py:ro
+      - ./models:/app/models:ro
+      - ./agent:/app/agent:ro
+      - ./database:/app/database:ro
+      - ./vectorstore:/app/vectorstore:ro
+      - ./knowledge_base:/app/knowledge_base:ro
+      - ./skills:/app/skills:ro
+      - ./mcp:/app/mcp:ro
+      # 数据持久化
+      - agent_data:/app/data
+      - agent_logs:/app/logs
+      - vector_db:/app/vector_db
+      - knowledge_base:/app/knowledge_base
+      - knowledge_bases:/app/knowledge_bases
+    environment:
+      # Ollama 配置（如果使用外部 Ollama）
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=qwen2.5:32b
+      # Python 环境
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    depends_on:
+      - ollama
+    networks:
+      - offline-agent-net
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  # Ollama 模型数据
+  ollama_data:
+  # Agent 数据
+  agent_data:
+  agent_logs:
+  vector_db:
+  knowledge_base:
+  knowledge_bases:
+
+networks:
+  offline-agent-net:
+    driver: bridge

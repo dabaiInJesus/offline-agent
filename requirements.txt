@@ -1,13 +1,17 @@
-# 核心框架
+# Offline Agent - Python Dependencies
+# 推荐使用 Python 3.10+
+
+# ============ 核心框架 ============
 langchain>=0.3.0
 langchain-core>=0.3.0
 langchain-community>=0.3.0
 langgraph>=0.2.0
 
-# Ollama 本地模型
+# ============ Ollama 本地模型 ============
 langchain-ollama>=0.2.0
+ollama>=0.3.0
 
-# 数据库连接
+# ============ 数据库连接 ============
 sqlalchemy>=2.0.0
 cx-oracle>=8.3.0
 pymysql>=1.1.0
@@ -16,41 +20,57 @@ pyhive>=0.7.0
 thrift>=0.16.0
 thrift-sasl>=0.4.3
 
-# 向量数据库
+# ============ 向量数据库 ============
 faiss-cpu>=1.8.0
+faiss-gpu>=1.8.0  # 可选，如需 GPU 加速
 chromadb>=0.5.0
 langchain-chroma>=0.1.0
 
-# 文档处理
+# ============ 文档处理 ============
 pypdf>=4.0.0
 python-docx>=1.1.0
 openpyxl>=3.1.0
 unstructured>=0.14.0
+pdfplumber>=0.10.0
+markitdown>=0.0.1a1
 
-# 嵌入模型
+# ============ 嵌入模型 ============
 sentence-transformers>=3.0.0
 
-# MCP (Model Context Protocol)
+# ============ MCP (Model Context Protocol) ============
 mcp>=0.9.0
 
-# 工具依赖
+# ============ 工具依赖 ============
 pydantic>=2.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0
 aiohttp>=3.9.0
+httpx>=0.27.0
 
-# 日志和监控
+# ============ 日志和监控 ============
 loguru>=0.7.0
 
-# Web 框架
+# ============ Web 框架 ============
 fastapi>=0.115.0
 uvicorn>=0.32.0
 python-multipart>=0.0.5
 websockets>=12.0
+sse-starlette>=2.0.0
 
-# 终端美化
+# ============ 终端美化 ============
 colorama>=0.4.6
+rich>=13.7.0
+typer>=0.12.0
 
-# 开发工具
+# ============ 开发工具 ============
 pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
 black>=24.0.0
+isort>=5.13.0
+flake8>=7.0.0
+mypy>=1.8.0
+
+# ============ 数据处理 ============
+numpy>=1.24.0
+pandas>=2.0.0
